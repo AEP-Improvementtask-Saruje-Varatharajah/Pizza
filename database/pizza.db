@@ -1,0 +1,32 @@
+fake_database = [
+    {
+        "name": "Margherita",
+        "zutaten": ["Tomate", "Mozzarella", "Basilikum"],
+        "beschreibung": "Klassische italienische Pizza mit Tomatensauce, Mozzarella und frischem Basilikum",
+        "preis": 10.0
+    },
+    {
+        "name": "Hawaii",
+        "zutaten": ["Tomate", "Mozzarella", "Schinken", "Ananas"],
+        "beschreibung": "Süß-herzhafte Pizza mit Schinken und Ananas",
+        "preis": 12.0
+    },
+    {
+        "name": "Salami",
+        "zutaten": ["Tomate", "Mozzarella", "Salami"],
+        "beschreibung": "Würzige Salami auf einer käsigen Tomatenbasis",
+        "preis": 11.5
+    },
+    {
+        "name": "Vegetarisch",
+        "zutaten": ["Tomate", "Mozzarella", "Champignons", "Zwiebeln", "Paprika", "Mais"],
+        "beschreibung": "Bunte Mischung aus Gemüse mit Mozzarella",
+        "preis": 11.0
+    },
+    {
+        "name": "Funghi",
+        "zutaten": ["Tomate", "Mozzarella", "Champignons"],
+        "beschreibung": "Pizza mit frischen Champignons und Käse",
+        "preis": 10.5
+    }
+]
