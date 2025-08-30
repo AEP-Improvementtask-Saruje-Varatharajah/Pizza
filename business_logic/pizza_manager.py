@@ -1,27 +1,52 @@
-from data_access.pizza_data_access import BaseDataAccess
+from model.pizza import Pizza
+from model.pizza_topping import PizzaTopping
+from data_access.pizza_data_access import PizzaDataAccess
 
 class PizzaManager:
-    def __init__(self, db_file):
-        self.db = BaseDataAccess(db_file)
+    def __init__(self):
+        self.__pizza_da = PizzaDataAccess()
 
-    def get_all_pizza(self):
-        return self.db.fetchall("SELECT * FROM Pizza")
+    def create_pizza(self, name: str, price: float, size: str, dough_type: str) -> Pizza:
+        return self.__pizza_da.create_new_pizza(name, price, size, dough_type)
 
-    def search_by_zutat(self, zutat):
-        return self.db.fetchall("SELECT * FROM Pizza WHERE zutaten LIKE ?", ('%' + zutat + '%',))
+    def read_pizza(self, pizza_id: int) -> Pizza:
+        return self.__pizza_da.read_pizza_by_id(pizza_id)
 
-    def search_by_name(self, name):
-        return self.db.fetchone("SELECT * FROM Pizza WHERE name = ?", (name,))
+    def read_all_pizzas(self) -> list[Pizza]:
+        return self.__pizza_da.read_all_pizzas()
 
-    def calculate_price(self, name, code=None):
-        pizza = self.search_by_name(name)
-        if pizza is None:
-            return None
+    def read_pizza_by_name(self, name: str) -> Pizza:
+        return self.__pizza_da.read_pizza_by_name(name)
 
-        # Annahme: Tabelle Pizza hat Spalten (id, name, zutaten, preis)
-        _, _, _, base_price = pizza
+    def read_pizzas_by_toppings(self, required_toppings: list[str]) -> list[Pizza]:
+        return self.__pizza_da.read_pizzas_by_toppings(required_toppings)
 
-        if code == "PIZZA10":
-            return round(base_price * 0.9, 2)
-        else:
-            return base_price
+    def read_toppings_for_pizza(self, pizza_id: int) -> list[str]:
+        return self.__pizza_da.read_toppings_for_pizza(pizza_id)
+
+    def update_pizza(self, pizza: Pizza) -> None:
+        self.__pizza_da.update_pizza(pizza)
+
+    def delete_pizza(self, pizza: Pizza) -> None:
+        self.__pizza_da.delete_pizza(pizza)
+
+    def get_all_pizzas(self) -> list[Pizza]:
+        return self.read_all_pizzas()
+
+    def find_pizzas_by_ingredient(self, ingredient: str) -> list[Pizza]:
+        return self.read_pizzas_by_toppings([ingredient])
+
+    def find_pizza_by_name(self, name: str) -> Pizza | None:
+        return self.read_pizza_by_name(name)
+
+    def display_pizzas(self, pizzas: list[Pizza]) -> None:
+        if not pizzas:
+            print("Keine Pizzen gefunden.")
+            return
+        
+        for pizza in pizzas:
+            print(f"Pizza: {pizza.name}, Preis: {pizza.price:.2f} CHF")
+            toppings = self.read_toppings_for_pizza(pizza.pizza_id)
+            if toppings:
+                print(f"Toppings: {', '.join(toppings)}")
+            print("-" * 40)
