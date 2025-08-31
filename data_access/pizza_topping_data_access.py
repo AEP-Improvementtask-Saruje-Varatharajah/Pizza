@@ -1,7 +1,6 @@
 from __future__ import annotations
 from model.pizza_topping import PizzaTopping
 from model.pizza import Pizza
-from model.topping import Topping
 from data_access.base_data_access import BaseDataAccess
 
 class PizzaToppingDataAccess(BaseDataAccess):

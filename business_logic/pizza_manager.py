@@ -1,5 +1,6 @@
+from data_access.base_data_access import BaseDataAccess
 from model.pizza import Pizza
-from model.pizza_topping import PizzaTopping
+from model.topping import Topping
 from data_access.pizza_data_access import PizzaDataAccess
 
 class PizzaManager:
@@ -38,6 +39,16 @@ class PizzaManager:
 
     def find_pizza_by_name(self, name: str) -> Pizza | None:
         return self.read_pizza_by_name(name)
+
+    def get_all_available_toppings(self) -> list[str]:
+        all_toppings = set()
+        all_pizzas = self.read_all_pizzas()
+    
+        for pizza in all_pizzas:
+            toppings = self.read_toppings_for_pizza(pizza.pizza_id)
+            all_toppings.update(toppings)
+    
+        return sorted(list(all_toppings))
 
     def display_pizzas(self, pizzas: list[Pizza]) -> None:
         if not pizzas:
